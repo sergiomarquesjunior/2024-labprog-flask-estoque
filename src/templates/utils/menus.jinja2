@@ -1,35 +1,3 @@
-from flask import Blueprint, render_template, flash, redirect, url_for, request
-from flask_login import login_required
-
-from src.forms.categoria import NovoCategoriaForm, EditCategoriaForm
-from src.modules import db
-from src.models.categoria import Categoria
-import sqlalchemy as sa
-
-bp = Blueprint('categoria', __name__, url_prefix='/categoria')
-
-@bp.route('/', methods=['GET'])
-def lista():
-    sentenca = sa.select(Categoria).order_by(Categoria.nome)
-    rset = db.session.execute(sentenca).scalars()
-
-    return render_template('categoria/lista.jinja2', rset=rset)
-
-@bp.route('/add', methods=['GET', 'POST'])
-@login_required
-def add():
-    form = NovoCategoriaForm()
-    if form.validate_on_submit():
-        categoria = Categoria()
-        categoria.nome = form.nome.data
-        db.session.add(categoria)
-        db.session.commit()
-        flash(f"Categoria '{form.nome.data}' adicionada")
-        return redirect(url_for('categoria.lista'))
-
-    return render_template('categoria/add.jinja2', title="Nova categoria", form=form)
-
-@bp.route('/edit/<uuid:id_categoria>', methods=['GET', 'POST'])
 {% macro barra_navegacao() %}
     {% from 'bootstrap5/nav.html' import render_nav_item %}
     {% from 'bootstrap5/utils.html' import render_icon %}
@@ -48,7 +16,7 @@ def add():
                         </a>
                         <ul class="dropdown-menu dropdown-menu-lg-end">
                             <li><a class="dropdown-item" href="#">{{ render_icon('card-list') }}&nbsp;Listar</a></li>
-                            <li><a class="dropdown-item" href="#">{{ render_icon('plus') }}&nbsp;Adicionar</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('produto.add') }}">{{ render_icon('plus') }} Adicionar</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">{{ render_icon('exclamation-diamond') }}&nbsp;Produtos em falta</a></li>
                             <li><a class="dropdown-item" href="#">{{ render_icon('boxes') }}&nbsp;Estoque</a></li>

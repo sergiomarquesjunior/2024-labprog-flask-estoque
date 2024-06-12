@@ -9,7 +9,7 @@
         <th scope="col">Estoque</th>
         <th scope="col">Ativo</th>
         <th scope="col" class="text-end">Preço</th>
-        <th scope="col" class="text-end">Operações</th>
+        <th scope="col" class="text-center">Operações</th>
     </tr></thead>
     <tbody>
     {% for produto in rset %}
@@ -18,8 +18,10 @@
             <td>{{ produto.estoque }}</td>
             <td>{%  if produto.ativo %}{{ render_icon ('check', color= 'success') }}{% else %}{{ render_icon ('x-lg', color= 'danger') }}{% endif %}</td>
             <td class="text-end">{{ produto.preco }}</td>
-            <td><a href="#" onclick="return confirm('Confirma a remoção do produto?')">{{ render_icon ('trash', color= 'danger') }}</a>
-                <a href="#">{{  render_icon('check-square') }}</a></td>
+            <td class="text-center">
+                <a href="{{  url_for('produto.edit', produto_id = produto.id) }}">
+                   {{  render_icon('pencil-square', color='primary') }} </a>
+                <a href="">{{ render_icon ('trash', color= 'danger') }}</a></td>
         </tr>
     {% endfor %}
     </tbody>

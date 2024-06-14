@@ -27,7 +27,7 @@ def add():
         flash(f"Categoria '{form.nome.data}' adicionada")
         return redirect(url_for('categoria.lista'))
 
-    return render_template('categoria/add.jinja2', title="Nova categoria", form=form)
+    return render_template('categoria/edit.jinja2', title="Nova categoria", form=form)
 
 @bp.route('/edit/<uuid:id_categoria>', methods=['GET', 'POST'])
 @login_required

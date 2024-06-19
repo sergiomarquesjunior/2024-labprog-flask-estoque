@@ -3,7 +3,7 @@
   "BOOTSTRAP_SERVE_LOCAL": true,
   "BOOTSTRAP_BOOTSWATCH_THEME": "cerulean",
 
-  "MINIFY": false,
+  "MINIFY": true,
 
   "SQLITE_DB_NAME": "application_db.sqlite3",
   "SQLALCHEMY_DATABASE_URI": "sqlite+pysqlite:///application_db.sqlite3",

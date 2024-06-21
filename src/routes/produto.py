@@ -111,8 +111,12 @@ def delete(produto_id):
 def lista():
     page = request.args.get('page', type=int, default=1)
     pp = request.args.get('pp', type=int, default=25)
+    q = request.args.get('q', type=str, default="")
 
     sentenca = db.select(Produto).order_by(Produto.nome)
+
+    if q != "":
+        sentenca = sentenca.filter(Produto.nome.ilike(f"%{q}%"))
 
     try:
         rset = db.paginate(sentenca, page=page, per_page=pp, error_out=True)
@@ -125,7 +129,8 @@ def lista():
                             title="Lista de produtos",
                             rset=rset,
                            page=page,
-                           pp=pp)
+                           pp=pp,
+                           q=q)
 
 
 
